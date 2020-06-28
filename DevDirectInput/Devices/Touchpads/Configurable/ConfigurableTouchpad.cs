@@ -47,7 +47,7 @@ namespace DevDirectInput.Devices.Touchpads.Configurable
         }
 
         public void Tap(IAbsolutePosition position, int startTick)
-            => Tap(position, Options.DefaultClickTicks, startTick);
+            => Tap(position, startTick, Options.DefaultClickTicks);
 
         public void Tap(IAbsolutePosition position, int startTick, int ticks)
             => Tap(position.X, position.Y, startTick, ticks);

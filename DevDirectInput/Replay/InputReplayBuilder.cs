@@ -8,11 +8,14 @@ namespace DevDirectInput.Replay
 {
     public class InputReplayBuilder
     {
-        public float TickRate { get; set; }
-        public bool StopOnTrigger { get; set; }
-        public bool StartOnTrigger { get; set; }
+        public float TickRate { get; }
 
         private readonly List<IInputDevice> _devices = new List<IInputDevice>();
+
+        public InputReplayBuilder(float tickRate)
+        {
+            TickRate = tickRate;
+        }
 
         public void AddDevice(IInputDevice device)
         {
@@ -99,8 +102,6 @@ namespace DevDirectInput.Replay
                 DevicePaths = devicePaths.ToArray(),
                 InputDeviceIds = inputDevices.ToArray(),
                 TriggerDeviceIds = triggerDevices.ToArray(),
-                StartOnTrigger = StartOnTrigger,
-                StopOnTrigger = StopOnTrigger,
                 Updates = mainTimeline,
                 PostAbortUpdates = abortTimeline
             };

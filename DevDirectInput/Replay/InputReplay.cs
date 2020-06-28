@@ -7,10 +7,7 @@ namespace DevDirectInput.Replay
     public class InputReplay
     {
         [JsonProperty] 
-        public const short Version = 1;
-
-        public bool StopOnTrigger { get; set; } = false;
-        public bool StartOnTrigger { get; set; } = false;
+        public const int Version = 2;
 
         public string[] DevicePaths { get; set; } = new string[0];
         public int[] InputDeviceIds { get; set; } = new int[0];
@@ -29,7 +26,7 @@ namespace DevDirectInput.Replay
                 {
                     NamingStrategy = namingStrategy ?? new CamelCaseNamingStrategy()
                 },
-                Formatting = Formatting.None
+                Formatting = formatting
             });
         }
     }
