@@ -14,7 +14,7 @@ namespace DevDirectInput.Devices.Touchpads.Configurable
         IDeviceOptions IInputDevice.Options => Options;
 
         public EDevicePurpose Purpose { get; set; }
-        public bool SupportAborting { get; } = false;
+        public bool SupportAborting { get; } = true;
         public ITouchpadOptions Options { get; }
 
         private int _trackingId = 100;
