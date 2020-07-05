@@ -9,9 +9,9 @@ namespace DevDirectInput.Replay
         [JsonProperty] 
         public const int Version = 3;
 
-        public string Name { get; set; }
-        public string Author { get; set; }
-        public string About { get; set; }
+        public string Name { get; set; } = "";
+        public string Author { get; set; } = "";
+        public string About { get; set; } = "";
         
         public string[] DevicePaths { get; set; } = new string[0];
         public int[] InputDeviceIds { get; set; } = new int[0];
