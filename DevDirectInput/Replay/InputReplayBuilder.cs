@@ -9,6 +9,9 @@ namespace DevDirectInput.Replay
     public class InputReplayBuilder
     {
         public float TickRate { get; }
+        public string Name { get; set; }
+        public string Author { get; set; }
+        public string About { get; set; }
 
         private readonly List<IInputDevice> _devices = new List<IInputDevice>();
 
@@ -103,7 +106,11 @@ namespace DevDirectInput.Replay
                 InputDeviceIds = inputDevices.ToArray(),
                 TriggerDeviceIds = triggerDevices.ToArray(),
                 Updates = mainTimeline,
-                PostAbortUpdates = abortTimeline
+                PostAbortUpdates = abortTimeline,
+
+                Author = Author,
+                Name = Name,
+                About = About
             };
         }
     }
