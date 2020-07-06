@@ -4,6 +4,6 @@
     {
         Press,
         Release,
-        Move
+        Hold
     }
 }

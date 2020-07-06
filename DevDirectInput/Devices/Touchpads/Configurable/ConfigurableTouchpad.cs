@@ -46,6 +46,51 @@ namespace DevDirectInput.Devices.Touchpads.Configurable
             throw new ArgumentException($"No free slots. All {Options.Multitouch} is used");
         }
 
+        public void Swipe(IAbsolutePosition from, IAbsolutePosition to, int startTick, int ticks)
+        {
+            Swipe(from.X, from.Y, to.X, to.Y, startTick, ticks);
+        }
+
+        public void Swipe(int fromX, int fromY, int toX, int toY, int startTick, int ticks)
+        {
+            var slot = FindFreeSlot(startTick, ticks);
+            var xDelta = toX - fromX;
+            var yDelta = toY - fromY;
+            var xPxPerTick = xDelta / ticks;
+            var yPxPerTick = yDelta / ticks;
+
+            _timeline.Add(startTick, new TouchpadEvent()
+            {
+                Pressure = Options.DefaultClickPressure,
+                Slot = slot,
+                EventType = ETouchpadEventType.Press,
+                XPos = fromX,
+                YPos = fromY,
+                TrackingId = _trackingId
+            });
+            for (int i = 1; i < ticks; i++)
+            {
+                _timeline.Add(i, new TouchpadEvent()
+                {
+                    Pressure = Options.DefaultClickPressure,
+                    Slot = slot,
+                    EventType = ETouchpadEventType.Hold,
+                    XPos = fromX + (i * xPxPerTick),
+                    YPos = fromY + (i * yPxPerTick),
+                    TrackingId = _trackingId
+                });
+            }
+
+            _timeline.Add(startTick + ticks, new TouchpadEvent()
+            {
+                Pressure = Options.DefaultClickPressure,
+                Slot = slot,
+                EventType = ETouchpadEventType.Release,
+                TrackingId = _trackingId
+            });
+            _trackingId++;
+        }
+
         public void Tap(IAbsolutePosition position, int startTick)
             => Tap(position, startTick, Options.DefaultClickTicks);
 
@@ -79,7 +124,7 @@ namespace DevDirectInput.Devices.Touchpads.Configurable
                 {
                     Pressure = Options.DefaultClickPressure,
                     Slot = slot,
-                    EventType = ETouchpadEventType.Press,
+                    EventType = ETouchpadEventType.Hold,
                     XPos = xPos,
                     YPos = yPos,
                     TrackingId = _trackingId

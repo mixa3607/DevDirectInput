@@ -92,6 +92,16 @@ namespace DevDirectInput.Devices.Touchpads
             _trackingId++;
         }
 
+        public void Swipe(IAbsolutePosition from, IAbsolutePosition to, int startTick, int ticks)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Swipe(int fromX, int fromY, int toX, int toY, int startTick, int ticks)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<List<RawInputEvent>?> BuildRawUpdates()
         {
             var updates = new List<List<RawInputEvent>?>();

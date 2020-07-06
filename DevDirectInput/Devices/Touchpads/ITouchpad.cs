@@ -9,5 +9,8 @@ namespace DevDirectInput.Devices.Touchpads
         void Tap(IAbsolutePosition position, int startTick, int ticks);
         void Tap(int xPos, int yPos, int startTick);
         void Tap(int xPos, int yPos, int startTick, int ticks);
+
+        void Swipe(IAbsolutePosition from, IAbsolutePosition to, int startTick, int ticks);
+        void Swipe(int fromX, int fromY, int toX, int toY, int startTick, int ticks);
     }
 }
