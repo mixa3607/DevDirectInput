@@ -22,7 +22,9 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Install dependencies
       run: dotnet restore
-    - name: Build solution and generate NuGet package
+    - name: Build solution
+      run: dotnet build -c Release ${{github.event.inputs.project}}
+    - name: Generate NuGet package
       run: dotnet pack -c Release ${{github.event.inputs.project}}
     - name: Push generated package to gh
       run: dotnet nuget push ${{github.event.inputs.project}}/bin/Release/*.nupkg --skip-duplicate --no-symbols true
