@@ -8,8 +8,8 @@ import json
 import math
 import datetime
 import shutil
-from typing import List, Tuple, Sequence, Dict
 import argparse
+from typing import List, Tuple, Sequence, Dict
 from urllib.request import urlopen
 
 
@@ -284,7 +284,6 @@ class EventReplayPlayer:
         self.prepare_abort_events()
         self.execute_replay()
         self.close_event_fds()
-        logging.info('finish')
 
 
 def get_args() -> any:
