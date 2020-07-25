@@ -1,0 +1,30 @@
+name: .NET Core
+
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'Project to pack'
+        required: true
+        default: 'DevDirectInput'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+        source-url: https://nuget.pkg.github.com/mixa3607/index.json
+      env: 
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build solution and generate NuGet package
+      run: |  
+        cd ${{github.event.inputs.project}}
+        dotnet pack -c Release -o out
+    - name: Push generated package to GitHub registry
+      run: dotnet nuget push ./${{github.event.inputs.project}}/out/*.nupkg --skip-duplicate --no-symbols true
