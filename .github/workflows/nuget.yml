@@ -1,0 +1,28 @@
+name: Build and push to gh nuget
+
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'Project to pack'
+        required: true
+        default: 'DevDirectInput'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+        source-url: https://nuget.pkg.github.com/mixa3607/index.json
+      env: 
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build solution and generate NuGet package
+      run: dotnet pack -c Release ${{github.event.inputs.project}}
+    - name: Push generated package to gh
+      run: dotnet nuget push ${{github.event.inputs.project}}/bin/Release/*.nupkg --skip-duplicate --no-symbols true
